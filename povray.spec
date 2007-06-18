@@ -1,20 +1,20 @@
-%define name	povray
-%define version 3.6.1
 %define PKGRELEASE 3.6
-%define release %mkrel 2
 
-Name:         	%{name}
-License:      	povray
-Version:        %{version}
-Release:        %{release}
-Group:        	Sciences/Computer science
-Summary:      	Ray tracer
+Summary:	The Persistence of Vision Raytracer
+Name:		povray
+Version:	3.6.1
+Release:	%mkrel 3
+Group:		Sciences/Computer science
+License:	GPL
+URL:		http://www.povray.org
 Source:		%{name}-%{version}.tar.bz2
 Source1:	%{name}.bash-completion.bz2
-URL:	      	http://www.povray.org
-BuildRoot:      %{_tmppath}/%name-buildroot
-BuildRequires:	zlib1-devel, libpng-devel, XFree86-devel, libjpeg-devel, libtiff-devel
-Obsoletes:	povray-common, povray-official
+BuildRoot:	%{_tmppath}/%{name}-buildroot
+BuildRequires:	zlib1-devel
+BuildRequires:	libpng-devel
+BuildRequires:	X11-devel
+BuildRequires:	libjpeg-devel
+BuildRequires:	libtiff-devel
 
 %description
 The Persistence of Vision Ray tracer creates three-dimensional,
@@ -27,19 +27,22 @@ take several hours) but it produces very high quality images
 with realistic reflections, shading, perspective, and other effects.
 
 %prep
-rm -rf ${RPM_BUILD_ROOT}
 %setup -q 
 bzcat %{SOURCE1} > %{name}.bash-completion
 
 %build
-%configure --with-x COMPILED_BY="Mandriva_Linux"
+%configure2_5x --with-x COMPILED_BY="Mandriva_Linux"
 %make 
 
 %install
-rm -rf $RPM_BUILD_ROOT
-install -d -m 755 $RPM_BUILD_ROOT%{_sysconfdir}/bash_completion.d
-install -m 644 %{name}.bash-completion $RPM_BUILD_ROOT%{_sysconfdir}/bash_completion.d/%{name}
-make install DESTDIR=$RPM_BUILD_ROOT 
+rm -rf %{buildroot}
+%makeinstall_std
+
+install -d -m 755 %{buildroot}%{_sysconfdir}/bash_completion.d
+install -m 644 %{name}.bash-completion %{buildroot}%{_sysconfdir}/bash_completion.d/%{name}
+
+%clean
+rm -rf %{buildroot}
 
 %files 
 %defattr(-,root,root)
@@ -48,12 +51,6 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %config(noreplace) %{_sysconfdir}/%{name}/%PKGRELEASE/povray.ini
 %doc doc/* 
 %doc %{_mandir}/man1/povray.1.bz2
+%{_bindir}/povray
 %{_defaultdocdir}/%{name}-%PKGRELEASE
 %{_datadir}/%{name}-%PKGRELEASE
-
-%{_bindir}/povray
-
-%clean
-rm -rf $RPM_BUILD_ROOT
-
-
