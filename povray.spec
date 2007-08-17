@@ -50,7 +50,7 @@ rm -rf %{buildroot}
 %config(noreplace) %{_sysconfdir}/%{name}/%PKGRELEASE/povray.conf
 %config(noreplace) %{_sysconfdir}/%{name}/%PKGRELEASE/povray.ini
 %doc doc/* 
-%doc %{_mandir}/man1/povray.1.bz2
+%doc %{_mandir}/man1/povray.*
 %{_bindir}/povray
 %{_defaultdocdir}/%{name}-%PKGRELEASE
 %{_datadir}/%{name}-%PKGRELEASE
