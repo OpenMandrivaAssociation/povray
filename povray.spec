@@ -9,6 +9,7 @@ License:	GPL
 URL:		http://www.povray.org
 Source:		%{name}-%{version}.tar.bz2
 Source1:	%{name}.bash-completion.bz2
+BuildRoot:	%{_tmppath}/%{name}-buildroot
 BuildRequires:	zlib1-devel
 BuildRequires:	libpng-devel
 BuildRequires:	X11-devel
