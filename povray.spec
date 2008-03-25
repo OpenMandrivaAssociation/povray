@@ -3,12 +3,13 @@
 Summary:	The Persistence of Vision Raytracer
 Name:		povray
 Version:	3.6.1
-Release:	%mkrel 3
+Release:	%mkrel 4
 Group:		Sciences/Computer science
 License:	GPL
 URL:		http://www.povray.org
 Source:		%{name}-%{version}.tar.bz2
 Source1:	%{name}.bash-completion.bz2
+Patch0:		povray-3.6.1-config-0.2.0.diff.bz2
 BuildRoot:	%{_tmppath}/%{name}-buildroot
 BuildRequires:	zlib1-devel
 BuildRequires:	libpng-devel
@@ -28,10 +29,11 @@ with realistic reflections, shading, perspective, and other effects.
 
 %prep
 %setup -q 
+%patch0 -p1
 bzcat %{SOURCE1} > %{name}.bash-completion
 
 %build
-%configure2_5x --with-x COMPILED_BY="Mandriva_Linux"
+%configure2_5x --with-x COMPILED_BY="Mandriva_Linux" --disable-optimiz
 %make 
 
 %install
