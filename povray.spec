@@ -3,7 +3,7 @@
 Summary:	The Persistence of Vision Raytracer
 Name:		povray
 Version:	3.6.1
-Release:	%mkrel 7
+Release:	%mkrel 8
 Group:		Sciences/Computer science
 License:	GPL
 URL:		http://www.povray.org
