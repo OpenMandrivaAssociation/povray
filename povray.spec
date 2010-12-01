@@ -3,19 +3,22 @@
 Summary:	The Persistence of Vision Raytracer
 Name:		povray
 Version:	3.6.1
-Release:	%mkrel 8
+Release:	%mkrel 9
 Group:		Sciences/Computer science
 License:	GPL
 URL:		http://www.povray.org
 Source:		%{name}-%{version}.tar.bz2
-Source1:	%{name}.bash-completion.bz2
-Patch0:		povray-3.6.1-config-0.2.0.diff.bz2
+Source1:	%{name}.bash-completion
+Patch0:		povray-3.6.1-config-0.2.0.diff
+Patch1:		povray-3.6.1-use-system-libpng.patch
 BuildRoot:	%{_tmppath}/%{name}-buildroot
-BuildRequires:	zlib1-devel
+BuildRequires:	zlib-devel
+BuildRequires:	libx11-devel
+BuildRequires:	libxpm-devel
 BuildRequires:	libpng-devel
-BuildRequires:	X11-devel
 BuildRequires:	libjpeg-devel
 BuildRequires:	libtiff-devel
+BuildRequires:	svgalib-devel
 
 %description
 The Persistence of Vision Ray tracer creates three-dimensional,
@@ -30,9 +33,10 @@ with realistic reflections, shading, perspective, and other effects.
 %prep
 %setup -q 
 %patch0 -p1
-bzcat %{SOURCE1} > %{name}.bash-completion
+%patch1 -p1
 
 %build
+./bootstrap
 %configure2_5x --with-x COMPILED_BY="Mandriva_Linux" --disable-optimiz
 %make 
 
@@ -41,7 +45,7 @@ rm -rf %{buildroot}
 %makeinstall_std
 
 install -d -m 755 %{buildroot}%{_sysconfdir}/bash_completion.d
-install -m 644 %{name}.bash-completion %{buildroot}%{_sysconfdir}/bash_completion.d/%{name}
+install -m 644 %{SOURCE1} %{buildroot}%{_sysconfdir}/bash_completion.d/%{name}
 
 %clean
 rm -rf %{buildroot}
