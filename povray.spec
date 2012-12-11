@@ -1,17 +1,18 @@
-%define PKGRELEASE 3.6
+%define debug_package	%{nil}
+%define PKGRELEASE 3.7
 
 Summary:	The Persistence of Vision Raytracer
 Name:		povray
-Version:	3.6.1
-Release:	%mkrel 9
+Version:	3.7.0
+Release:	%mkrel 0.RC6.1
 Group:		Sciences/Computer science
 License:	GPL
 URL:		http://www.povray.org
-Source:		%{name}-%{version}.tar.bz2
+Source0:	http://www.povray.org/beta/source/povray-%{version}.RC6.tar.gz
 Source1:	%{name}.bash-completion
-Patch0:		povray-3.6.1-config-0.2.0.diff
-Patch1:		povray-3.6.1-use-system-libpng.patch
-BuildRoot:	%{_tmppath}/%{name}-buildroot
+Patch0:		povray-3.7.0-install.patch
+Patch1:		povray-3.7.0-link.patch
+Patch2:		povray-3.7.0-boost-time.patch
 BuildRequires:	zlib-devel
 BuildRequires:	libx11-devel
 BuildRequires:	libxpm-devel
@@ -19,6 +20,9 @@ BuildRequires:	libpng-devel
 BuildRequires:	libjpeg-devel
 BuildRequires:	libtiff-devel
 BuildRequires:	svgalib-devel
+BuildRequires:	pkgconfig(OpenEXR)
+BuildRequires:	pkgconfig(sdl)
+BuildRequires:	boost-devel
 
 %description
 The Persistence of Vision Ray tracer creates three-dimensional,
@@ -31,27 +35,23 @@ take several hours) but it produces very high quality images
 with realistic reflections, shading, perspective, and other effects.
 
 %prep
-%setup -q 
-%patch0 -p1
-%patch1 -p1
+%setup -qn povray-%{version}.RC6
+%patch0 -p0
+%patch1 -p0
+%patch2 -p0
 
 %build
-./bootstrap
-%configure2_5x --with-x COMPILED_BY="Mandriva_Linux" --disable-optimiz
-%make 
+autoreconf -fi
+%configure2_5x --with-x COMPILED_BY="%_vendor" --disable-optimiz --with-boost-libdir=%{_libdir}
+%make
 
 %install
-rm -rf %{buildroot}
 %makeinstall_std
 
 install -d -m 755 %{buildroot}%{_sysconfdir}/bash_completion.d
 install -m 644 %{SOURCE1} %{buildroot}%{_sysconfdir}/bash_completion.d/%{name}
 
-%clean
-rm -rf %{buildroot}
-
 %files 
-%defattr(-,root,root)
 %config(noreplace) %{_sysconfdir}/bash_completion.d/%{name}
 %config(noreplace) %{_sysconfdir}/%{name}/%PKGRELEASE/povray.conf
 %config(noreplace) %{_sysconfdir}/%{name}/%PKGRELEASE/povray.ini
