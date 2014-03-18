@@ -4,7 +4,7 @@
 Summary:	The Persistence of Vision Raytracer
 Name:		povray
 Version:	3.7.0
-Release:	%mkrel 0.RC6.1
+Release:	0.RC6.1
 Group:		Sciences/Computer science
 License:	GPL
 URL:		http://www.povray.org
@@ -14,11 +14,11 @@ Patch0:		povray-3.7.0-install.patch
 Patch1:		povray-3.7.0-link.patch
 Patch2:		povray-3.7.0-boost-time.patch
 BuildRequires:	zlib-devel
-BuildRequires:	libx11-devel
-BuildRequires:	libxpm-devel
-BuildRequires:	libpng-devel
-BuildRequires:	libjpeg-devel
-BuildRequires:	libtiff-devel
+BuildRequires:	pkgconfig(x11)
+BuildRequires:	pkgconfig(xpm)
+BuildRequires:	pkgconfig(libpng)
+BuildRequires:	jpeg-devel
+BuildRequires:	tiff-devel
 BuildRequires:	svgalib-devel
 BuildRequires:	pkgconfig(OpenEXR)
 BuildRequires:	pkgconfig(sdl)
