@@ -7,7 +7,7 @@ Version:	3.7.0
 Release:	0.RC6.1
 Group:		Sciences/Computer science
 License:	GPL
-URL:		http://www.povray.org
+URL:		https://www.povray.org
 Source0:	http://www.povray.org/beta/source/povray-%{version}.RC6.tar.gz
 Source1:	%{name}.bash-completion
 Patch0:		povray-3.7.0-install.patch
