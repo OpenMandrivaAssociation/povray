@@ -13,6 +13,11 @@ Source1:	%{name}.bash-completion
 Patch0:		povray-3.7.0-install.patch
 Patch1:		povray-3.7.0-link.patch
 Patch2:		povray-3.7.0-boost-time.patch
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	zlib-devel
 BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(xpm)
